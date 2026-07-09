@@ -9,8 +9,20 @@ The app provides these endpoints:
 - `GET /` returns a simple hello-world message.
 - `GET /products` returns a sample list of products.
 - `POST /generate` accepts a JSON body with a `message` field, sends that message to the Groq model, and returns the model output.
+`POST /generate-stream`) — Streams the LLM response back to the client in real-time.
 
-## Project file
+### Response Streaming Feature
+When a broad prompt (like *"What is life?"*) is passed to an LLM, it can take significant time to process and return a large response block. To improve user experience and perceived performance, we use a technique called **Streaming**. 
+
+Instead of making the user wait for the entire response to compile, streaming delivers the generation in real-time chunks (tokens)—similar to the user interfaces of ChatGPT, Perplexity, and GitHub Copilot.
+
+#### Implementation
+We implemented this streaming logic in a dedicated file called `streaming.py`, utilizing FastAPI's `StreamingResponse` class to handle the chunked data stream. 
+
+Please refer to `streaming.py` for the implementation details. Below is an example of the streaming API response:
+![streaming-response](<Screenshot 2026-07-09 at 12.33.03 PM.png>)
+
+## Project files
 
 Save your code in a file named `main.py`.
 
@@ -260,6 +272,10 @@ Example response shape:
   "status": "success"
 }
 ```
+
+4. Streaming endpoint
+To test the chunked streaming feature:
+![streaming-response](<Screenshot 2026-07-09 at 12.33.03 PM.png>)
 
 ## Interactive API docs
 
